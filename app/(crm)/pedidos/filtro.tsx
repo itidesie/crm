@@ -1,16 +1,20 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { cn } from "@/lib/utils"
+
+const OPCIONES = [["", "Todos"], ["pending", "Pendientes"], ["paid", "Pagados"]] as const
 
 export function FiltroPedidos({ pago }: { pago: string }) {
   const router = useRouter()
   return (
-    <div className="mb-4">
-      <Select value={pago || "todos"} onValueChange={(v) => router.push(v === "todos" ? "/pedidos" : `/pedidos?pago=${v}`)}>
-        <SelectTrigger className="w-48"><SelectValue /></SelectTrigger>
-        <SelectContent><SelectItem value="todos">Todos los pagos</SelectItem><SelectItem value="pending">Pendientes</SelectItem><SelectItem value="paid">Pagados</SelectItem></SelectContent>
-      </Select>
+    <div className="inline-flex gap-1 rounded-2xl bg-foreground/[0.06] p-1" role="group" aria-label="Estado del pago">
+      {OPCIONES.map(([v, l]) => (
+        <button key={v} type="button" aria-pressed={pago === v} onClick={() => router.push(v ? `/pedidos?pago=${v}` : "/pedidos")}
+          className={cn("h-9 rounded-xl px-4 text-sm font-semibold transition-all duration-200", pago === v ? "bg-card text-foreground shadow-[0_1px_2px_oklch(0.2_0.03_265/0.14),0_0_0_1px_oklch(0.2_0.03_265/0.06)]" : "text-muted-foreground hover:text-foreground")}>
+          {l}
+        </button>
+      ))}
     </div>
   )
 }

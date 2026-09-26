@@ -16,7 +16,7 @@ export async function PipelinePage({ codigo, titulo, descripcion }: { codigo: "a
   ])
   return (
     <>
-      <PageHeader titulo={titulo} descripcion={descripcion} />
+      <PageHeader seccion="Pipelines" titulo={titulo} descripcion={descripcion} />
       <PipelineBoard etapas={(etapas.data ?? []) as Etapa[]} oportunidades={(opps.data ?? []) as unknown as Opp[]}
         usuarios={usuarios.data ?? []} yo={usuario.id} rol={usuario.rol} conProgramas={codigo === "admision"} />
     </>

@@ -3,18 +3,18 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const badgeVariants = cva(
-  "inline-flex w-fit shrink-0 items-center justify-center gap-1 whitespace-nowrap rounded-md border px-2 py-0.5 text-xs font-medium [&>svg]:size-3 [&>svg]:pointer-events-none",
+  "inline-flex w-fit shrink-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-[3px] text-[0.72rem] font-semibold leading-none ring-1 ring-inset [&>svg]:size-3 [&>svg]:pointer-events-none",
   {
     variants: {
       variant: {
-        default: "border-transparent bg-primary text-primary-foreground",
-        secondary: "border-transparent bg-secondary text-secondary-foreground",
-        outline: "text-foreground",
-        destructive: "border-transparent bg-destructive text-white",
-        success: "border-transparent bg-emerald-100 text-emerald-800",
-        warning: "border-transparent bg-amber-100 text-amber-800",
-        info: "border-transparent bg-sky-100 text-sky-800",
-        muted: "border-transparent bg-muted text-muted-foreground",
+        default: "bg-primary text-primary-foreground ring-primary-deep/40",
+        secondary: "bg-foreground/[0.06] text-foreground/75 ring-foreground/10",
+        outline: "text-foreground ring-foreground/20",
+        destructive: "bg-red-50 text-red-700 ring-red-600/20",
+        success: "bg-emerald-50 text-emerald-700 ring-emerald-600/20",
+        warning: "bg-amber-50 text-amber-800 ring-amber-600/25",
+        info: "bg-blue-50 text-blue-700 ring-blue-600/20",
+        muted: "bg-foreground/[0.05] text-muted-foreground ring-foreground/[0.08]",
       },
     },
     defaultVariants: { variant: "default" },

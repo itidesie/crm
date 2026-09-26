@@ -30,7 +30,7 @@ export default async function BandejaPage({ searchParams }: { searchParams: Prom
 
   return (
     <>
-      <PageHeader titulo="Bandeja de entradas" descripcion="Todo lo que llega por la web, de más reciente a más antiguo. Se actualiza en tiempo real." />
+      <PageHeader seccion="Entrada" titulo="Bandeja de entradas" descripcion="Todo lo que llega por la web, de más reciente a más antiguo. Se actualiza en tiempo real." />
       <BandejaCliente
         filas={(data ?? []) as Entrada[]} total={count ?? 0} pagina={pagina} porPagina={POR_PAGINA}
         filtros={{ tipo: f.tipo ?? "", estado: f.estado ?? "", leida: f.leida ?? "", desde: f.desde ?? "", hasta: f.hasta ?? "", q: f.q ?? "" }}

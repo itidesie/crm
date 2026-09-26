@@ -56,6 +56,12 @@ CRM_URL=http://localhost:3001 pnpm smoke
 
 Usa Chrome (puppeteer-core): protección de rutas, login con cada rol, todas las pantallas, permisos por rol (UI y API), registro de actividad, arrastre en el kanban, marcar baja, y Realtime (inserta una fila en una tabla de formulario por SQL y comprueba que aparece en la bandeja sin recargar). **Modifica datos** → después `pnpm db:reset`.
 
+## Diseño
+
+Sistema visual «Estudio»: lienzo de papel cálido, menú flotante oscuro (contraíble, con tooltips; en móvil se abre como cajón), paleta de comandos **⌘K / Ctrl+K** (buscar contactos y saltar entre pantallas), tipografías Bricolage Grotesque + Hanken Grotesk + Geist Mono, y azul IDESIE como único acento fuerte. Los estilos base están en `app/globals.css` (tokens y utilidades `surface`, `glass`, `eyebrow`, `num`…) y en `components/ui/*`.
+
+Para revisar todo visualmente: `CRM_URL=http://localhost:3001 node scripts/capturas.mjs /tmp/capturas` (genera un PNG por pantalla, en escritorio y móvil).
+
 ## Cómo funciona
 
 - **Migraciones** (`supabase/migrations`): `020…036` son copias literales de los `scripts/` de la web (esquema `public`); `037…041` son del CRM:
