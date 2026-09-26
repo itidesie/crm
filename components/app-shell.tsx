@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils"
 
 const CLAVE = "crm-menu-colapsado"
 
-export function AppShell({ datos, children }: { datos: DatosMenu; children: React.ReactNode }) {
+export function AppShell({ datos, caducaEn, children }: { datos: DatosMenu; caducaEn: number | null; children: React.ReactNode }) {
   const pathname = usePathname()
   const [colapsado, setColapsado] = useState(false)
   const [paleta, setPaleta] = useState(false)
@@ -21,6 +21,12 @@ export function AppShell({ datos, children }: { datos: DatosMenu; children: Reac
   useEffect(() => { try { setColapsado(localStorage.getItem(CLAVE) === "1") } catch {} }, [])
   const alternar = () => setColapsado((c) => { try { localStorage.setItem(CLAVE, c ? "0" : "1") } catch {} return !c })
   useEffect(() => setMovil(false), [pathname])
+  // A las 3 h de iniciar sesión se cierra aunque la pestaña siga abierta sin navegar
+  useEffect(() => {
+    if (caducaEn === null) return
+    const t = setTimeout(() => window.location.assign("/login?expirada=1"), Math.max(0, caducaEn - Date.now()))
+    return () => clearTimeout(t)
+  }, [caducaEn])
   useEffect(() => {
     const f = (e: KeyboardEvent) => { if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") { e.preventDefault(); setPaleta((p) => !p) } }
     window.addEventListener("keydown", f)

@@ -2,8 +2,8 @@ import { ShieldCheck, Inbox, KanbanSquare, Zap } from "lucide-react"
 import { LogoMarca } from "@/components/logo"
 import { LoginForm } from "./login-form"
 
-export default async function LoginPage({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
-  const { error } = await searchParams
+export default async function LoginPage({ searchParams }: { searchParams: Promise<{ error?: string; expirada?: string }> }) {
+  const { error, expirada } = await searchParams
   return (
     <main className="grid min-h-screen lg:grid-cols-[1.1fr_1fr]">
       {/* Panel de marca */}
@@ -54,6 +54,11 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
           <div className="eyebrow mb-3 text-primary">Acceso para el equipo</div>
           <h1 className="font-display text-4xl font-bold tracking-[-0.03em]">Bienvenido de nuevo</h1>
           <p className="mt-2.5 text-muted-foreground">Entra con tu email y contraseña para continuar.</p>
+          {expirada && (
+            <p role="status" className="mt-6 rounded-2xl bg-blue-50 p-4 text-sm leading-relaxed text-blue-900 ring-1 ring-blue-600/20" data-testid="aviso-expirada">
+              Tu sesión ha caducado (dura 3 horas). Vuelve a entrar para continuar.
+            </p>
+          )}
           {error === "sin_acceso" && (
             <p role="status" className="mt-6 rounded-2xl bg-amber-50 p-4 text-sm leading-relaxed text-amber-900 ring-1 ring-amber-600/20">
               Tu usuario existe pero no tiene acceso al CRM. Pide a un administrador que te dé de alta.

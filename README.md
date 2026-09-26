@@ -62,6 +62,10 @@ Sistema visual «Estudio»: lienzo de papel cálido, menú flotante oscuro (cont
 
 Para revisar todo visualmente: `CRM_URL=http://localhost:3001 node scripts/capturas.mjs /tmp/capturas` (genera un PNG por pantalla, en escritorio y móvil).
 
+## Sesión
+
+La sesión dura **3 horas desde que escribes la contraseña** (límite absoluto, no se alarga por usar el CRM). Se calcula con la marca de inicio que va dentro del token firmado de Supabase, así que no se puede falsificar. Al caducar te lleva a `/login` con un aviso. El límite está en `lib/sesion.ts` y se aplica en `proxy.ts`. Al iniciar sesión se comprueba además que la cuenta esté dada de alta y activa en `crm.usuarios`; si no, se rechaza con un mensaje claro. Prueba: `scripts/prueba-sesion.mjs`.
+
 ## Cómo funciona
 
 - **Migraciones** (`supabase/migrations`): `020…036` son copias literales de los `scripts/` de la web (esquema `public`); `037…041` son del CRM:
