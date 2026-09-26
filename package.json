@@ -1,0 +1,53 @@
+{
+  "name": "idesie-crm",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@11.25.0",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "build": "next build",
+    "start": "next start -p 3001",
+    "typecheck": "tsc --noEmit",
+    "db:start": "supabase start",
+    "db:stop": "supabase stop",
+    "db:reset": "supabase db reset",
+    "seed:generar": "node scripts/generar-seed.mjs",
+    "smoke": "node scripts/smoke.mjs"
+  },
+  "dependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@radix-ui/react-avatar": "1.1.2",
+    "@radix-ui/react-checkbox": "1.1.3",
+    "@radix-ui/react-dialog": "1.1.4",
+    "@radix-ui/react-dropdown-menu": "2.1.4",
+    "@radix-ui/react-label": "2.1.1",
+    "@radix-ui/react-scroll-area": "1.2.2",
+    "@radix-ui/react-select": "2.1.4",
+    "@radix-ui/react-separator": "1.1.1",
+    "@radix-ui/react-slot": "1.1.1",
+    "@radix-ui/react-switch": "1.1.2",
+    "@radix-ui/react-tabs": "1.1.2",
+    "@radix-ui/react-tooltip": "1.1.6",
+    "@supabase/ssr": "^0.7.0",
+    "@supabase/supabase-js": "^2.112.4",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "date-fns": "4.1.0",
+    "lucide-react": "^0.454.0",
+    "next": "16.2.0",
+    "react": "^19",
+    "react-dom": "^19",
+    "sonner": "^1.7.4",
+    "tailwind-merge": "^3.3.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.9",
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "puppeteer-core": "^25.9.0",
+    "tailwindcss": "^4.1.9",
+    "tw-animate-css": "1.3.3",
+    "typescript": "^5"
+  }
+}
