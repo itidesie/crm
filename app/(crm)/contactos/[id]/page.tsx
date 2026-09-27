@@ -9,6 +9,7 @@ import { TipoIcono } from "@/components/tipo-icono"
 import { EntradaDetalle } from "@/components/entrada-detalle"
 import { ContactoForm, NotaForm, NuevaOportunidad, TareaFila, TareaForm } from "@/components/contacto-acciones"
 import { ESTADOS_ENTRADA, TIPOS_ENTRADA, resumenEntrada, type UsuarioLista } from "@/lib/tipos"
+import { CANALES_ORIGEN } from "@/lib/canal-origen"
 import { fechaCorta, fechaHora, hace } from "@/lib/format"
 
 export const dynamic = "force-dynamic"
@@ -74,6 +75,7 @@ export default async function ContactoPage({ params }: { params: Promise<{ id: s
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-2">
               {contacto.no_contactar && <Badge variant="destructive" data-testid="badge-no-contactar"><Ban /> No contactar</Badge>}
+              {contacto.canal_origen && <Badge variant={CANALES_ORIGEN[contacto.canal_origen]?.color ?? "muted"} data-testid="badge-canal-origen">{CANALES_ORIGEN[contacto.canal_origen]?.label ?? contacto.canal_origen}</Badge>}
               {(etiquetas.data ?? []).map((t: any) => <Badge key={t.etiqueta?.nombre} variant="secondary">{t.etiqueta?.nombre}</Badge>)}
             </div>
             <h1 className="mt-2 font-display text-[clamp(1.9rem,1.4rem+1.6vw,2.75rem)] leading-none font-bold tracking-[-0.03em]" data-testid="ficha-nombre">{contacto.nombre ?? "(sin nombre)"}</h1>

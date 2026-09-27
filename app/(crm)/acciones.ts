@@ -43,13 +43,28 @@ export async function marcarLeida(id: string, leida: boolean): Promise<Resultado
 // ── Contactos ────────────────────────────────────────────────────────────────
 export async function actualizarContacto(
   id: string,
-  v: { nombre: string | null; telefono: string | null; pais: string | null; ciudad: string | null; propietario_id: string | null; no_contactar: boolean },
+  v: {
+    nombre: string | null; telefono: string | null; pais: string | null; ciudad: string | null
+    propietario_id: string | null; no_contactar: boolean; canal_origen: string | null
+  },
 ) {
   const limpio = (s: string | null) => (s && s.trim() ? s.trim() : null)
   return actualizar("contactos", id, {
     nombre: limpio(v.nombre), telefono: limpio(v.telefono), pais: limpio(v.pais), ciudad: limpio(v.ciudad),
-    propietario_id: v.propietario_id, no_contactar: v.no_contactar,
+    propietario_id: v.propietario_id, no_contactar: v.no_contactar, canal_origen: v.canal_origen,
   }, [`/contactos/${id}`, "/contactos", "/bajas"])
+}
+
+export interface FilaImportada { email: string; nombre?: string | null; telefono?: string | null; programa?: string | null; canal_origen?: string | null }
+export interface ResumenImportacion { nuevos: number; actualizados: number; oportunidades: number; omitidos: number }
+
+export async function importarContactosExcel(filas: FilaImportada[]): Promise<Resultado & { resumen?: ResumenImportacion }> {
+  if (!filas.length) return { ok: false, error: "No hay filas para importar." }
+  const supabase = await createClient()
+  const { data, error } = await supabase.rpc("importar_leads_excel", { p_filas: filas })
+  if (error) return traducir(error)
+  revalidatePath("/contactos"); revalidatePath("/admision")
+  return { ok: true, resumen: data as ResumenImportacion }
 }
 export async function marcarNoContactar(contactoId: string, valor: boolean): Promise<Resultado> {
   const supabase = await createClient()

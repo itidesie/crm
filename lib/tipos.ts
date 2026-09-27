@@ -6,7 +6,11 @@ export const TIPOS_ENTRADA: Record<string, { label: string; color: "info" | "suc
   candidatura: { label: "Candidatura", color: "warning" },
   pedido: { label: "Pedido", color: "success" },
   baja: { label: "Baja", color: "destructive" },
-  lead_legacy: { label: "Lead (histórico)", color: "muted" },
+  // Sigue llamándose "lead_legacy" en la vista de la web (crm.v_entradas_web) — el nombre se quedó de
+  // cuando era solo el formulario antiguo de /landing, pero desde 2026-09-28 es el flujo EN VIVO del
+  // formulario de solicitud de información de toda la web (agendar llamada ahí es opcional). No es
+  // histórico ni está muerto — no lo trates como tal.
+  lead_legacy: { label: "Solicitud de información", color: "info" },
   cita: { label: "Cita", color: "info" },
 }
 
@@ -41,7 +45,11 @@ export function resumenEntrada(tipo: string, p: Record<string, any>): string {
     case "candidatura": return `Candidatura · ${p.oferta_puesto ?? "espontánea"}`
     case "pedido": return `Pedido #${p.id} · ${Number(p.total_amount ?? 0).toLocaleString("es-ES")} € · ${p.status === "paid" ? "pagado" : "pendiente"}`
     case "baja": return `Solicitud de baja · ${MOTIVOS_BAJA[p.motivo] ?? p.motivo ?? ""}`
-    case "lead_legacy": return `Solicitud de sesión (histórico) · ${p.master_interes ?? "sin programa"}`
+    case "lead_legacy": {
+      const programa = p.master_interes ? p.master_interes : "sin programa concreto"
+      const llamada = p.session_date ? ` · llamada el ${p.session_date} ${String(p.session_time ?? "").slice(0, 5)}` : " · sin llamada agendada"
+      return `Solicitud de información · ${programa}${llamada}`
+    }
     default: return tipo
   }
 }

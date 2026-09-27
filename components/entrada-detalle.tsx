@@ -69,10 +69,19 @@ export function EntradaDetalle({ tipo, payload: p }: { tipo: string; payload: Re
       )}
       {tipo === "lead_legacy" && (
         <>
-          <Campo etiqueta="Interés" valor={p.master_interes} />
-          <Campo etiqueta="Sesión" valor={p.session_date ? `${fechaCorta(p.session_date)} ${String(p.session_time).slice(0, 5)}` : null} />
+          <Campo etiqueta="Interés" valor={p.master_interes ?? "Sin programa concreto"} />
+          {/* Agendar llamada es opcional desde 2026-09-28 (scripts/037 de la web) — se muestra
+              siempre esta fila, con "Sin agendar" en vez de ocultarla, para que se note a simple
+              vista que no pidió que la llamaran a una hora fija (no es un dato que falte). */}
+          <Campo
+            etiqueta="Llamada"
+            valor={p.session_date
+              ? <Badge variant="info">{fechaCorta(p.session_date)} · {String(p.session_time ?? "").slice(0, 5)}</Badge>
+              : <span className="text-muted-foreground">Sin agendar</span>}
+          />
           <Campo etiqueta="Teléfono" valor={p.phone} />
-          <Campo etiqueta="Estado" valor={p.status} />
+          <Campo etiqueta="Mensaje" valor={p.mensaje} />
+          <Campo etiqueta="Estado" valor={p.status && <Badge variant="muted">{p.status}</Badge>} />
         </>
       )}
     </dl>

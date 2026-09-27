@@ -1,4 +1,4 @@
-import { GraduationCap, MessageSquareText, Download, Briefcase, ShoppingBag, UserX, History, CalendarClock, Inbox, type LucideIcon } from "lucide-react"
+import { GraduationCap, MessageSquareText, Download, Briefcase, ShoppingBag, UserX, Send, CalendarClock, Inbox, type LucideIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const TIPOS: Record<string, { icon: LucideIcon; tono: string }> = {
@@ -8,7 +8,10 @@ const TIPOS: Record<string, { icon: LucideIcon; tono: string }> = {
   candidatura: { icon: Briefcase, tono: "bg-amber-50 text-amber-700 ring-amber-600/20" },
   pedido: { icon: ShoppingBag, tono: "bg-emerald-50 text-emerald-700 ring-emerald-600/15" },
   baja: { icon: UserX, tono: "bg-red-50 text-red-700 ring-red-600/15" },
-  lead_legacy: { icon: History, tono: "bg-slate-100 text-slate-500 ring-slate-500/15" },
+  // "lead_legacy" es el nombre heredado de la vista de la web, pero es el flujo EN VIVO del
+  // formulario de solicitud de información (con llamada opcional) — icono y tono a juego con su
+  // badge "info" en lib/tipos.ts, no con el gris apagado que tenía cuando parecía histórico.
+  lead_legacy: { icon: Send, tono: "bg-sky-50 text-sky-700 ring-sky-600/15" },
   cita: { icon: CalendarClock, tono: "bg-cyan-50 text-cyan-700 ring-cyan-600/15" },
 }
 

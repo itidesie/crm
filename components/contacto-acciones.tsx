@@ -11,6 +11,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { actualizarContacto, añadirNota, completarTarea, crearOportunidad, crearTarea } from "@/app/(crm)/acciones"
 import type { UsuarioLista } from "@/lib/tipos"
+import { CANALES_ORIGEN } from "@/lib/canal-origen"
 import { fechaCorta, vencida } from "@/lib/format"
 import { cn } from "@/lib/utils"
 
@@ -23,7 +24,7 @@ function useAccion() {
 }
 
 export function ContactoForm({ contacto, usuarios, puedeEditar }: {
-  contacto: { id: string; nombre: string | null; telefono: string | null; pais: string | null; ciudad: string | null; propietario_id: string | null; no_contactar: boolean }
+  contacto: { id: string; nombre: string | null; telefono: string | null; pais: string | null; ciudad: string | null; propietario_id: string | null; no_contactar: boolean; canal_origen: string | null }
   usuarios: UsuarioLista[]; puedeEditar: boolean
 }) {
   const [v, setV] = useState(contacto)
@@ -41,6 +42,10 @@ export function ContactoForm({ contacto, usuarios, puedeEditar }: {
         <Select value={v.propietario_id ?? "nadie"} onValueChange={(x) => set("propietario_id", x === "nadie" ? null : x)} disabled={!puedeEditar}>
           <SelectTrigger className="w-full"><SelectValue /></SelectTrigger>
           <SelectContent><SelectItem value="nadie">Sin asignar</SelectItem>{usuarios.map((u) => <SelectItem key={u.id} value={u.id}>{u.nombre}</SelectItem>)}</SelectContent></Select></div>
+      <div className="space-y-1.5"><Label className="eyebrow text-[0.6rem] text-muted-foreground">Canal de origen</Label>
+        <Select value={v.canal_origen ?? "sin_canal"} onValueChange={(x) => set("canal_origen", x === "sin_canal" ? null : x)} disabled={!puedeEditar}>
+          <SelectTrigger className="w-full" data-testid="canal-origen-trigger"><SelectValue /></SelectTrigger>
+          <SelectContent><SelectItem value="sin_canal">Sin especificar</SelectItem>{Object.entries(CANALES_ORIGEN).map(([valor, c]) => <SelectItem key={valor} value={valor}>{c.label}</SelectItem>)}</SelectContent></Select></div>
       <div className={cn("flex items-center justify-between gap-3 rounded-2xl p-3.5 ring-1 ring-inset transition-colors", v.no_contactar ? "bg-red-50 ring-red-600/25" : "bg-foreground/[0.03] ring-foreground/[0.07]")}>
         <div className="flex items-start gap-3">
           <span className={cn("mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-xl", v.no_contactar ? "bg-red-100 text-red-600" : "bg-foreground/[0.06] text-muted-foreground")}><Ban className="size-4" /></span>
